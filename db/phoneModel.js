@@ -5,7 +5,7 @@ var phoneSchema = new Schema({
 	title: String,
 	price: Number,
 	href : String,
-	photo: {filepath: String, url: String},
+	photo: [String],
 	date: { type: Date, default: Date.now},
 	status : Number, //0 - invalid ; 1 - valid
 })
