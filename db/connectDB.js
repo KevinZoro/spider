@@ -6,13 +6,35 @@
 var mongoose = require('mongoose');
 var debug = require('debug')('connect.db');
 
-function connectDB(){
- 	mongoose.connect('mongodb://localhost/pra_mongo');
+function DB(){
+ 	this.db = this;
+}
+
+DB.prototype.connect = function (callback){
+	mongoose.connect('mongodb://localhost/pra_mongo');
  	var db = mongoose.connection;
- 	db.on('error', console.error.bind(console,' connection error:'));
+ 	db.on('error', function (err){
+ 		if(err){
+ 			console.error(err);
+ 			callback(err);
+ 		}
+ 	});;
  	db.once('open',function (){
  		debug("mongodb connecting success!");
+ 		callback();
  	})
 }
 
-module.exports.connectDB = connectDB;
+DB.prototype.dropCollection = function (collectionName,callback){
+	mongoose.connection.db.dropCollection(collectionName,function (err,result){
+		if(err){
+			console.error(err);
+			callback(err);
+		}else{
+			debug("drop collection:%j success!",collectionName);
+			callback(null,collectionName);
+		}
+	})
+}
+
+module.exports = DB;
