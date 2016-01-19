@@ -35,6 +35,8 @@ DB.prototype.dropCollection = function (collectionName,callback){
 			callback(null,collectionName);
 		}
 	})
+	//mongoose.connection.db.close();
 }
+
 
 module.exports = DB;

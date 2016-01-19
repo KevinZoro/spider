@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var phoneSchema = new Schema({
 	title: String,
-	price: Number,
+	price: String,
 	href : String,
 	photo: [String],
 	date: { type: Date, default: Date.now},
